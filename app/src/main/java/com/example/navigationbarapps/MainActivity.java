@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class MainActivity extends AppCompatActivity {
 //    Global variable Declaration
     DrawerLayout drawerLayout;
@@ -31,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListAdapter expandableListAdapter;
     List<String> expandableTitleList;
     HashMap<String, List<String>> expandableDetailList;
+
+//    Expandable recycler View
+
+    private RecyclerView recyclerView;
+    private List<DataModel> mList;
+    private ItemAdapter adapter;
+
 
 
     //  Drawer Toggle Options
@@ -47,6 +58,101 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        Expandable Recycler View Starts
+
+        recyclerView = findViewById(R.id.main_recyclervie);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mList = new ArrayList<>();
+
+        //list1
+        List<String> nestedList1 = new ArrayList<>();
+        nestedList1.add("Jams and Honey");
+        nestedList1.add("Pickles and Chutneys");
+        nestedList1.add("Readymade Meals");
+        nestedList1.add("Chyawanprash and Health Foods");
+        nestedList1.add("Pasta and Soups");
+        nestedList1.add("Sauces and Ketchup");
+        nestedList1.add("Namkeen and Snacks");
+        nestedList1.add("Honey and Spreads");
+
+        List<String> nestedList2 = new ArrayList<>();
+        nestedList2.add("Book");
+        nestedList2.add("Pen");
+        nestedList2.add("Office Chair");
+        nestedList2.add("Pencil");
+        nestedList2.add("Eraser");
+        nestedList2.add("NoteBook");
+        nestedList2.add("Map");
+        nestedList2.add("Office Table");
+
+        List<String> nestedList3 = new ArrayList<>();
+        nestedList3.add("Decorates");
+        nestedList3.add("Tea Table");
+        nestedList3.add("Wall Paint");
+        nestedList3.add("Furniture");
+        nestedList3.add("Bedsits");
+        nestedList3.add("Certain");
+        nestedList3.add("Namkeen and Snacks");
+        nestedList3.add("Honey and Spreads");
+
+        List<String> nestedList4 = new ArrayList<>();
+        nestedList4.add("Pasta");
+        nestedList4.add("Spices");
+        nestedList4.add("Salt");
+        nestedList4.add("Chyawanprash");
+        nestedList4.add("Maggie");
+        nestedList4.add("Sauces and Ketchup");
+        nestedList4.add("Snacks");
+        nestedList4.add("Kurkure");
+
+        List<String> nestedList5 = new ArrayList<>();
+        nestedList5.add("Jams and Honey");
+        nestedList5.add("Pickles and Chutneys");
+        nestedList5.add("Readymade Meals");
+        nestedList5.add("Chyawanprash and Health Foods");
+        nestedList5.add("Pasta and Soups");
+        nestedList5.add("Sauces and Ketchup");
+        nestedList5.add("Namkeen and Snacks");
+        nestedList5.add("Honey and Spreads");
+
+        List<String> nestedList6 = new ArrayList<>();
+        nestedList6.add("Pasta");
+        nestedList6.add("Spices");
+        nestedList6.add("Salt");
+        nestedList6.add("Chyawanprash");
+        nestedList6.add("Maggie");
+        nestedList6.add("Sauces and Ketchup");
+        nestedList6.add("Snacks");
+        nestedList6.add("Kurkure");
+
+
+        List<String> nestedList7 = new ArrayList<>();
+        nestedList7.add("Decorates");
+        nestedList7.add("Tea Table");
+        nestedList7.add("Wall Paint");
+        nestedList7.add("Furniture");
+        nestedList7.add("Bedsits");
+        nestedList7.add("Certain");
+        nestedList7.add("Namkeen and Snacks");
+        nestedList7.add("Honey and Spreads");
+        List<String> nestedList8 = new ArrayList<>();
+
+        mList.add(new DataModel(nestedList1 , "Instant Food and Noodles"));
+        mList.add(new DataModel( nestedList2,"Stationary"));
+        mList.add(new DataModel( nestedList3,"Home Care"));
+        mList.add(new DataModel(nestedList4 ,"Grocery & Staples"));
+        mList.add(new DataModel(nestedList5,"Pet Care"));
+        mList.add(new DataModel(nestedList6,"Baby Care"));
+        mList.add(new DataModel(nestedList7 ,"Personal Care"));
+        mList.add(new DataModel(nestedList8,"Test Added"));
+
+        adapter = new ItemAdapter(mList);
+        recyclerView.setAdapter(adapter);
+//        Expandable Recycler View Ends
+
 
 //        Get Layout On Find by Activity
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -76,7 +182,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), expandableTitleList.get(groupPosition) + " List Collapsed.", Toast.LENGTH_SHORT).show();
             }
         });
-
+//
+        if(expandableListViewExample.getChildCount()<=0){
+            expandableListViewExample.setGroupIndicator(null);
+        }
+        Log.d("error",expandableListViewExample.toString());
         // This method is called when the child in any group is clicked
         // via a toast method, it is shown to display the selected child item as a sample
         // we may need to add further steps according to the requirements
